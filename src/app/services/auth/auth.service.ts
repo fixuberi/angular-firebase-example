@@ -62,14 +62,14 @@ export class AuthService {
 
   public signOut() {
     return this.fireAuth.signOut().then(() => {
-      this.router.navigate(["login"]);
+      this.router.navigate(['auth', 'signin']);
     });
   }
 
   private sendEmailVerification() {
     return this.fireAuth.currentUser.then((user) => {
       user.sendEmailVerification();
-      // this.router.navigate(["verify-email-address"]);
+      this.router.navigate(['auth', 'verify-email-address']);
     });
   }
 
