@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'verify-email-address', component: VerifyEmailAddressComponent },
+  { path: 'verify-email-address/:email', component: VerifyEmailAddressComponent },
 ];
 
 @NgModule({

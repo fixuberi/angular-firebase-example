@@ -1,0 +1,61 @@
+:host {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  form {
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2em;
+
+    .mat-form-field {
+      width: 100%;
+    }
+
+    button {
+      width: initial;
+      margin-bottom: 1em;
+    }
+  }
+
+  .social-auth {
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    &-facebook {
+      background-color: #29487d;
+      color: white;
+    }
+    &-google {
+      background-color: rgba($color: #ffe4c4, $alpha: 0.5);
+      back
+      .mat-button-wrapper {
+        display: initial !important;
+      }
+      img {
+        width: 2em
+      }
+    }
+
+    mat-icon {
+      transform: scale(1.5);
+    }
+  }
+
+  .signup-link {
+
+  }
+}

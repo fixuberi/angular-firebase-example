@@ -1,1 +1,32 @@
-<p>signup works!</p>
+<div class="container">
+  <h1>Sign up</h1>
+  <form [formGroup]="form">
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput type="text" formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password confirm</mat-label>
+      <input matInput type="password" formControlName="passwordConfirm">
+    </mat-form-field>
+
+    <button mat-stroked-button
+      class="submit-btn"
+      color="primary"
+      (click)="signUp()"
+      [disabled]="!form.valid"
+      >Sign up</button>
+
+    <div class="nav-link">
+      <a routerLink="/auth/signin">I already have an account</a>
+    </div>
+  </form>
+
+</div>

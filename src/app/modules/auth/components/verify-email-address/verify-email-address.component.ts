@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 @Component({
   templateUrl: './verify-email-address.component.html',
@@ -6,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VerifyEmailAddressComponent implements OnInit {
 
-  constructor() { }
+  email: string;
+
+  constructor(
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+    this.route.params.pipe(
+      tap((params) => this.email = params.email)
+    ).subscribe();
   }
 
 }

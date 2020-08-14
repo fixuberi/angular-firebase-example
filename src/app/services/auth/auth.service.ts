@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 
 interface UserData extends Partial<firebase.User> {}
 
@@ -35,20 +35,18 @@ export class AuthService {
   public signUpWithEmail(email, password) {
     return this.fireAuth
       .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.sendEmailVerification();
-        this.setUserDataInFirestore(result.user);
-      })
+      .then((result) =>
+        this.sendEmailVerification(email)
+      )
       .catch(({ message }) => console.log(message));
   }
 
   public signInWithEmail(email, password) {
     return this.fireAuth
       .signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.router.navigate([""]);
-        this.setUserDataInFirestore(result.user);
-      })
+      .then((result) =>
+        this.router.navigate([""])
+      )
       .catch(({ message }) => console.log(message));
   }
 
@@ -66,10 +64,10 @@ export class AuthService {
     });
   }
 
-  private sendEmailVerification() {
+  private sendEmailVerification(email: string) {
     return this.fireAuth.currentUser.then((user) => {
       user.sendEmailVerification();
-      this.router.navigate(['auth', 'verify-email-address']);
+      this.router.navigate(['auth', 'verify-email-address', email]);
     });
   }
 

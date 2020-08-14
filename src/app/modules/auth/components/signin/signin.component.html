@@ -1,1 +1,35 @@
-<p>signin works!</p>
+<div class="container">
+  <h1>Sign in</h1>
+  <form [formGroup]="form">
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput type="text" formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password">
+    </mat-form-field>
+
+    <button mat-stroked-button
+      class="submit-btn"
+      color="primary"
+      (click)="signInWithEmail()"
+      [disabled]="!form.valid"
+      >Sign in</button>
+
+    <div class="signup-link">
+      <a routerLink="/auth/signup">Sign up</a>
+    </div>
+  </form>
+
+  <div class="social-auth">
+    <button mat-fab class="social-auth-facebook" (click)="signInWithFacebook()">
+      <mat-icon>facebook</mat-icon>
+    </button>
+    <button mat-fab class="social-auth-google" (click)="signInWithGoogle()">
+      <img src="../../../../../assets/icons/google.svg">
+    </button>
+  </div>
+</div>
