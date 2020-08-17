@@ -13,6 +13,8 @@ import { environment } from 'src/environments/environment';
 
 // providers
 import { AuthService } from './services/auth/auth.service';
+import { MatMenuModule, MatButtonModule } from '@angular/material';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   imports: [
@@ -24,9 +26,13 @@ import { AuthService } from './services/auth/auth.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
+
+    MatMenuModule,
+    MatButtonModule,
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
   ],
   providers: [
     AuthService,

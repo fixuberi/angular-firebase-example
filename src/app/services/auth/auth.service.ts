@@ -29,7 +29,7 @@ export class AuthService {
   public get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem(this.LS_USER_DATA_KEY));
 
-    return user && user.emailVerified;
+    return user //&& user.emailVerified;
   }
 
   public signUpWithEmail(email, password) {

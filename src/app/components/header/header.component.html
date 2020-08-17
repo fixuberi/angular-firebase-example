@@ -1,0 +1,24 @@
+<div class="logo">
+  <a href="#">
+  <img src="../../../assets/angular_logo.png" alt="logo">
+</a>
+</div>
+<div class="spacer"></div>
+<div class="auth-buttons" *ngIf="!isLoggedIn">
+  <button mat-flat-button color="primary" (click)="goToSignIn()">Sign in</button>
+  <button mat-flat-button color="primary" (click)="goToSignUp()">Sign up</button>
+</div>
+<div class="authorized-menu" *ngIf="isLoggedIn">
+  <div class="user-info">
+    <div class="display-name" *ngIf="userDisplayName">{{ userDisplayName }}</div>
+    <div class="email" *ngIf="userEmail">{{ userEmail }}</div>
+  </div>
+  <button mat-button [matMenuTriggerFor]="menu">
+    <img *ngIf="userPhotoUrl" class="avatar" [src]="userPhotoUrl" alt="user avatar">
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="signOut()">
+      Sign out
+    </button>
+  </mat-menu>
+</div>
