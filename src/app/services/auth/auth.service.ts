@@ -8,10 +8,10 @@ import * as firebase from 'firebase/app';
 interface UserData extends Partial<firebase.User> {}
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class AuthService {
-  readonly LS_USER_DATA_KEY = 'firebaseUser';
+  readonly LS_USER_DATA_KEY = "firebaseUser";
 
   public user: UserData | null = null;
 
@@ -20,33 +20,32 @@ export class AuthService {
     public fireAuth: AngularFireAuth,
     public router: Router
   ) {
-    this.fireAuth.authState.subscribe((user: UserData) =>
-      this.setUserDataLocaly(user)
-    );
+    this.fireAuth.authState.subscribe((user: UserData) => {
+      this.setUserDataLocaly(user);
+    });
   }
 
   // Returns true when user is looged in and email is verified
   public get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem(this.LS_USER_DATA_KEY));
 
-    return user //&& user.emailVerified;
+    return user; //&& user.emailVerified;
   }
 
   public signUpWithEmail(email, password) {
     return this.fireAuth
       .createUserWithEmailAndPassword(email, password)
-      .then((result) =>
-        this.sendEmailVerification(email)
-      )
+      .then((result) => this.sendEmailVerification(email))
       .catch(({ message }) => console.log(message));
   }
 
   public signInWithEmail(email, password) {
     return this.fireAuth
       .signInWithEmailAndPassword(email, password)
-      .then((result) =>
-        this.router.navigate([""])
-      )
+      .then((result) => {
+        this.setUserDataLocaly(result.user);
+        this.router.navigate([""]);
+      })
       .catch(({ message }) => console.log(message));
   }
 
@@ -60,21 +59,25 @@ export class AuthService {
 
   public signOut() {
     return this.fireAuth.signOut().then(() => {
-      this.router.navigate(['auth', 'signin']);
+      this.setUserDataLocaly(null);
+      this.router.navigate(["auth", "signin"]);
     });
   }
 
   private sendEmailVerification(email: string) {
     return this.fireAuth.currentUser.then((user) => {
       user.sendEmailVerification();
-      this.router.navigate(['auth', 'verify-email-address', email]);
+      this.router.navigate(["auth", "verify-email-address", email]);
     });
   }
 
-  private authProviderLogin(provider: firebase.auth.FacebookAuthProvider_Instance) {
+  private authProviderLogin(
+    provider: firebase.auth.FacebookAuthProvider_Instance
+  ) {
     return this.fireAuth
       .signInWithPopup(provider)
       .then((result) => {
+        this.setUserDataLocaly(result.user);
         this.router.navigate([""]);
         this.setUserDataInFirestore(result.user);
       })
