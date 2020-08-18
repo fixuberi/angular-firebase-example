@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
+import { SnackBarService } from '../snack-bar/snack-bar.service';
 
 interface UserData extends Partial<firebase.User> {}
 
@@ -18,7 +19,8 @@ export class AuthService {
   constructor(
     public fireStore: AngularFirestore,
     public fireAuth: AngularFireAuth,
-    public router: Router
+    public router: Router,
+    private snackBar: SnackBarService,
   ) {
     this.fireAuth.authState.subscribe((user: UserData) => {
       this.setUserDataLocaly(user);
@@ -29,24 +31,28 @@ export class AuthService {
   public get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem(this.LS_USER_DATA_KEY));
 
-    return user; //&& user.emailVerified;
+    return user && user.emailVerified;
   }
 
   public signUpWithEmail(email, password) {
     return this.fireAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => this.sendEmailVerification(email))
-      .catch(({ message }) => console.log(message));
+      .catch(({ message }) => this.snackBar.error(message));
   }
 
   public signInWithEmail(email, password) {
     return this.fireAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
+        if (!result.user.emailVerified) {
+          throw Error('You should verify your email');
+        }
+
         this.setUserDataLocaly(result.user);
         this.router.navigate([""]);
       })
-      .catch(({ message }) => console.log(message));
+      .catch(({ message }) => this.snackBar.error(message));
   }
 
   public signInWithGoogle() {
@@ -81,7 +87,7 @@ export class AuthService {
         this.router.navigate([""]);
         this.setUserDataInFirestore(result.user);
       })
-      .catch(({ message }) => console.log(message));
+      .catch(({ message }) => this.snackBar.error(message));
   }
 
   private setUserDataInFirestore(user: UserData) {

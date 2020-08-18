@@ -13,8 +13,11 @@ import { environment } from 'src/environments/environment';
 
 // providers
 import { AuthService } from './services/auth/auth.service';
-import { MatMenuModule, MatButtonModule } from '@angular/material';
+import { MatMenuModule, MatButtonModule, MatSnackBarModule } from '@angular/material';
 import { HeaderComponent } from './components/header/header.component';
+import { ErrorSnackBarComponent } from './components/error-snack-bar/error-snack-bar.component';
+import { SuccessSnackBarComponent } from './components/success-snack-bar/success-snack-bar.component';
+import { SnackBarService } from './services/snack-bar/snack-bar.service';
 
 @NgModule({
   imports: [
@@ -29,13 +32,21 @@ import { HeaderComponent } from './components/header/header.component';
 
     MatMenuModule,
     MatButtonModule,
+    MatSnackBarModule,
   ],
   declarations: [
     AppComponent,
     HeaderComponent,
+    ErrorSnackBarComponent,
+    SuccessSnackBarComponent,
+  ],
+  entryComponents: [
+    ErrorSnackBarComponent,
+    SuccessSnackBarComponent,
   ],
   providers: [
     AuthService,
+    SnackBarService,
   ],
   bootstrap: [AppComponent]
 })
