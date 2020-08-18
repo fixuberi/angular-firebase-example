@@ -56,5 +56,9 @@
     mat-icon {
       transform: scale(1.5);
     }
+
+    .inactive-button {
+      opacity: 0.5
+    }
   }
 }
