@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  url: string = "https://angular.io";
+  urlSafe: SafeResourceUrl;
 
-  ngOnInit(): void {
+  constructor(public sanitizer: DomSanitizer) { }
+
+  ngOnInit() {
+    this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
 }
